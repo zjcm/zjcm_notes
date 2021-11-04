@@ -1,0 +1,38 @@
+415. 字符串相加
+给定两个字符串形式的非负整数 num1 和num2 ，计算它们的和。
+
+
+提示：
+
+num1 和num2 的长度都小于 5100
+num1 和num2 都只包含数字 0-9
+num1 和num2 都不包含任何前导零
+你不能使用任何內建 BigInteger 库， 也不能直接将输入的字符串转换为整数形式
+
+# 模拟加法
+
+class Solution:
+    def addStrings(self, num1: str, num2: str) -> str:
+        r = []
+        length1, length2 = len(num1), len(num2)
+        m = min(length1, length2)
+        ma = max(length1, length2)
+        p = 0
+        for i in range(1,ma+1):
+
+            a = int(num1[-i]) if i <= length1 else 0
+            b = int(num2[-i]) if i <= length2 else 0
+
+            if a + b + p >= 10:
+                t = a + b + p - 10
+                p = 1
+            else:
+                t = a + b + p
+                p = 0
+            r.append(str(t))
+        
+        if p == 1:
+            r.append("1")
+        
+        return "".join(reversed(r))
+

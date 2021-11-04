@@ -1,0 +1,48 @@
+145. 二叉树的后序遍历
+给定一个二叉树，返回它的 后序 遍历。
+
+示例:
+
+输入: [1,null,2,3]  
+   1
+    \
+     2
+    /
+   3 
+
+输出: [3,2,1]
+进阶: 递归算法很简单，你可以通过迭代算法完成吗？
+
+#### 和144题一样迭代 但是处理回溯时要比前序和中序稍微复杂一点点
+#### 这题我遇到了一个和题目本身无关的问题，搞了很久
+#### 代码没问题的，但是力扣上就一直报这个错
+#### SyntaxError: invalid non-printable character U+00A0
+
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def postorderTraversal(self, root: TreeNode) -> List[int]:
+        ans = []
+        stack = []
+        node = root
+        prev = None
+
+        while stack or node:
+            while node:
+                stack.append(node)
+                node = node.left
+
+            node = stack.pop()
+            if not node.right or node.right == prev:
+                ans.append(node.val)
+                prev = node
+                node = None
+            else:
+                stack.append(node)
+                node = node.right
+
+        return ans

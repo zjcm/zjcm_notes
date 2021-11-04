@@ -1,0 +1,33 @@
+输入一个非负整数数组，把数组里所有数字拼接起来排成一个数，打印能拼接出的所有数字中最小的一个。
+
+# 思路和179题的相同，自定义排序+相连
+
+class Solution:
+    def minNumber(self, nums: List[int]) -> str:
+        
+        def fancycompare(x,y):
+            rx = None
+            ry = None
+            if x < 9:
+                rx = x
+            if y < 9:
+                ry = y
+            if rx is not None and ry is not None:
+                if x >= y:
+                    return 1
+                else:
+                    return -1
+
+            # else:
+            sx = str(x)
+            sy = str(y)
+            if int(sx+sy) >= int(sy+sx):
+                return 1
+            else:
+                return -1
+        
+        sorted_nums = sorted(nums,key = functools.cmp_to_key(fancycompare))
+        sorted_nums = [str(i) for i in sorted_nums]
+        ans = "".join(sorted_nums)
+        return ans
+

@@ -1,0 +1,40 @@
+18. 四数之和
+给定一个包含 n 个整数的数组 nums 和一个目标值 target，判断 nums 中是否存在四个元素 a，b，c 和 d ，使得 a + b + c + d 的值与 target 相等？找出所有满足条件且不重复的四元组。
+
+注意：答案中不可以包含重复的四元组。
+
+示例 1：
+
+输入：nums = [1,0,-1,0,-2,2], target = 0
+输出：[[-2,-1,1,2],[-2,0,0,2],[-1,0,0,1]]
+示例 2：
+
+输入：nums = [], target = 0
+输出：[]
+
+# 思路：最暴力的四重循环是O(n四次方)的复杂度，最后两重循环可以用双指针变成一重循环，所以是O(n三次方)的复杂度，好像没有办法继续简化了
+
+class Solution:
+    def fourSum(self, nums: List[int], target: int) -> List[List[int]]:
+
+        nums.sort()
+        res = []
+        for i in range(size := len(nums)):
+            for j in range(i+1, size):
+                k = j + 1
+                l = size - 1
+                while k < l:
+                    I,J,K,L = nums[i],nums[j],nums[k],nums[l]
+                    cur = I+J+K+L
+                    if cur < target:
+                        k += 1
+                    elif cur > target:
+                        l -= 1
+                    elif cur == target:
+                        res.append(tuple([I,J,K,L]))
+                        k += 1
+
+        res = list(set(res))
+        return res
+
+
